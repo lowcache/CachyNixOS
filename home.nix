@@ -106,8 +106,7 @@
 		   claer = "clear";
 		   pamcan = "pacman";
 		   q = "qs -c ii";
-		   edit = "$EDITOR";	   
-		   
+		   edit = "$EDITOR";
 	};
 		
 	functions = {
@@ -253,7 +252,7 @@
 				     # Get the key fingerprint (long format for GitHub)
 				     set key_fingerprint (gpg --list-keys --with-colons $user_email | grep '^fpr' | tail -n 1 | cut -d':' -f10)
 				     set key_id (echo $key_fingerprint | cut -c1-8)
-				 .... = 'cd ../../..';
+				 
 				     if test -z "$key_id"
 				         echo "Error: Could not find key ID. Generation may have failed."
 				         rm -f $temp_batch_file
@@ -349,7 +348,7 @@
   home.packages = with pkgs; [
     		fish git fzf starship eza bat ripgrep micro
     		python3 flatpak gedit feh waypaper awww 
-    		hypridle hyprlock fd kitty brave tor
+    		hypridle hyprlock fd brave tor
   ];
 
   nix.package = pkgs.nix;	
