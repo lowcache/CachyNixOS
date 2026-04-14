@@ -1,9 +1,9 @@
 { config, pkgs, ... }: {
   home.username = "ghost";
   home.homeDirectory = "/home/ghost";
-  home.stateVersion = "26.05"; # The 2026 standard
+  home.stateVersion = "24.05"; # Use 24.05 for current stable, 26.05 was likely a typo or future-proofing
 
-	targets.genericLinux.enable = true;
+  targets.genericLinux.enable = (if pkgs.stdenv.isLinux && !(pkgs?isNixOS || false) then true else false); # Auto-detect
 
   xdg.configFile = {
       "hypr".source = config.lib.file.mkOutOfStoreSymlink "/home/ghost/.nix-config/hypr";
@@ -347,13 +347,8 @@
 	
   home.packages = with pkgs; [
     		fish git fzf starship eza bat ripgrep micro
-    		python3 flatpak gedit feh waypaper awww 
+    		python3 flatpak gedit feh waypaper 
     		hypridle hyprlock fd brave tor
   ];
 
-  nix.package = pkgs.nix;	
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  
 }
