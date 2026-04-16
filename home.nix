@@ -345,10 +345,93 @@
 	 	};			
 	};
 	
-  home.packages = with pkgs; [
-    		fish git fzf starship eza bat ripgrep micro
-    		python3 flatpak gedit feh waypaper 
-    		hypridle hyprlock fd brave tor
-  ];
-
-}
+    # Programs
+    programs.kitty = {
+      enable = true;
+      font = {
+        name = "TG Frekuent Mono";
+        size = 11;
+      };
+      settings = {
+        cursor_shape = "beam";
+        cursor_trail = 1;
+        window_margin_width = "21.75";
+        confirm_os_window_close = 0;
+        shell = "fish";
+        tab_bar_edge = "bottom";
+        tab_bar_align = "left";
+        tab_bar_style = "custom";
+        tab_bar_min_tabs = 1;
+        tab_activity_symbol = "none";
+        bell_on_tab = "no";
+        tab_separator = "";
+        tab_bar_margin_width = 0.0;
+        tab_title_template = "{f'{title[:30]}…' if title.rindex(title[-1]) + 1 > 30 else (title.center(6) if (title.rindex(title[-1]) + 1) % 2 == 0 else title.center(5))}";
+      };
+      keybindings = {
+        "ctrl+c" = "copy_or_interrupt";
+        "ctrl+f" = "launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id";
+        "kitty_mod+f" = "launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id";
+        "page_up" = "scroll_page_up";
+        "page_down" = "scroll_page_down";
+        "ctrl+plus" = "change_font_size all +1";
+        "ctrl+equal" = "change_font_size all +1";
+        "ctrl+kp_add" = "change_font_size all +1";
+        "ctrl+minus" = "change_font_size all -1";
+        "ctrl+underscore" = "change_font_size all -1";
+        "ctrl+kp_subtract" = "change_font_size all -1";
+        "ctrl+0" = "change_font_size all 0";
+        "ctrl+kp_0" = "change_font_size all 0";
+      };
+              extraConfig = ''
+          # BEGIN_KITTY_FONTS
+          symbol_map U+E000-U+F8FF,U+F0000-U+FFFFD,U+100000-U+10FFFD Symbols Nerd Font
+          # END_KITTY_FONTS
+          
+          active_tab_font_style   bold
+          active_tab_foreground   #44484A
+          active_tab_background   #798581
+          inactive_tab_foreground #EBD39D
+          inactive_tab_background #44484A
+          tab_bar_background      #44484A
+          '';    };
+  
+    programs.micro = {
+      enable = true;
+      settings = {
+        autosu = true;
+        colorscheme = "dracula-tc";
+        fastdirty = true;
+        filemanager = false;
+        linter = false;
+        multitab = "hsplit";
+        parsecursor = true;
+        pluginchannels = [
+          "https://raw.githubusercontent.com/Neko-Box-Coder/unofficial-plugin-channel/stable/channel.json"
+          "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+        ];
+        saveundo = true;
+        scrollbar = true;
+        scrollbarchar = "[]";
+      };
+    };
+  
+    # Fuzzel (no native HM module, use xdg)
+    xdg.configFile."fuzzel" = {
+      source = ./fuzzel;
+      recursive = true;
+    };
+  
+    # Wlogout (no native HM module, use xdg)
+    xdg.configFile."wlogout" = {
+      source = ./wlogout;
+      recursive = true;
+    };
+  
+      home.packages = with pkgs; [
+        fish git fzf starship eza bat ripgrep
+        python3 flatpak gedit feh waypaper
+        hypridle hyprlock fd brave tor
+        micro fuzzel wlogout
+      ];  
+  }

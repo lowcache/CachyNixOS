@@ -54,7 +54,7 @@ WINDOW=$(hyprctl clients -j | jq -r ".[] | select(.class == \"quake\")")
 
 if [ -z "$WINDOW" ]; then
     # Not running, launch it
-    hyprctl dispatch exec "[workspace special:quake] kitty --class quake"
+    hyprctl dispatch exec "[workspace special:quake] /usr/bin/kitty --class quake"
     exit 0
 fi
 
