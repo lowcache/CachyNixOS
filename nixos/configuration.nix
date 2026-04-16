@@ -1,4 +1,4 @@
-# System-wide configuration for ghost's CachyOS/Nix hybrid
+\# System-wide configuration for ghost's CachyOS/Nix hybrid
 # This will eventually replace the base system
 
 { config, pkgs, ... }:
@@ -29,6 +29,7 @@
   };
 
   # User
+  #TODO: check if all CachyOS user groups (#) are necessary
   users.users.ghost = {
     isNormalUser = true;
     description = "ghost";
@@ -37,9 +38,20 @@
       "docker"
       "bluetooth"
       "lp"
-      "networkmanager"
+      "networkmanager" #vs network -correct?
       "video"
       "audio"
+      #"users" - nix group redundant?
+      #"ghost"
+      #"sys"
+      #"rfkill"
+      #"storage"
+      #"input"
+      #"wireshark"
+      #"i2c"
+      #"kismet"
+      #"flutter"
+      #"nopasswdlogin"
     ];
   };
 
@@ -220,6 +232,7 @@
   };
 
   # Environment variables
+  #TODO: XDG env variables necessary?
   environment.sessionVariables = {
     EDITOR = "micro";
     BROWSER = "brave";
@@ -229,6 +242,15 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
+    XDG_CONFIG_HOME = "${HOME}/.config";
+    XDG_CACHE_HOME = "${HOME}/.cache";
+    XDG_DATA_HOME = "${HOME}/.local/share";
+    XDG_STATE_HOME = "${HOME}/.local/state";
+    XDG_CONFIG_DIRS = "/etc/xdg";
+    XDG_DATA_DIRS = "/usr/local/share:/usr/share:/var/lib/flatpak/exports/share:${XDG_DATA_HOME}/flatpak/exports/share";
+    XDG_DOWNLOAD_DIR = "${HOME}/Downloads";
+    XDG_PICTURES_DIR = "${HOME}/Pictures";
+    XDG_DOCUMENTS_DIR = "${HOME}/Documents";
   };
 
   # Nix
@@ -241,11 +263,13 @@
   nixpkgs.config.allowUnfree = true;
 
   # Fonts
+  #TODO: check nerdfonts.override for correct fonts
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
     jetbrains-mono
-    (nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" "NerdFontsSymbolsOnly" ]; })
+    #TO
+    (nerdfonts.override { fonts = [ "RobotoMono" "SauceCodePro" "OverpassM" "Monaco" "Monofur" "Monoid" "Mononoki" "MonospaceTypewriter" "Iosevka" "Hack" "Hurmit" "Hasklug" "DroidSansM" "EnvyCodeR" "Cousine" "Codesaver" "CodeNewRoman" "CaskaydiaCove" "Blexmono" "BitstromWera" "AnonymicePro" "VictorMono" "FiraCode" "JetBrainsMono" "NerdFontsSymbolsOnly" ]; })
   ];
 
   # This value determines the NixOS release with which your system is affiliated.
