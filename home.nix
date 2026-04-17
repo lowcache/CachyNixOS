@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   home.username = "ghost";
   home.homeDirectory = "/home/ghost";
   home.stateVersion = "24.05";
@@ -14,8 +14,6 @@
     # Migrated configs
     "fastfetch" = { source = ./fastfetch; recursive = true; };
     "htop" = { source = ./htop; recursive = true; };
-    "starship.toml".source = ./starship/starship.toml;
-    "cava" = { source = ./cava; recursive = true; };
     "fuzzel" = { source = ./fuzzel; recursive = true; };
     "wlogout" = { source = ./wlogout; recursive = true; };
   };
@@ -31,8 +29,6 @@
 
     interactiveShellInit = ''
       if status is-interactive
-          starship init fish | source
-
           if test -f ~/.local/state/quickshell/user/generated/terminal/sequences.txt
               cat ~/.local/state/quickshell/user/generated/terminal/sequences.txt
           end
@@ -238,6 +234,11 @@
         end
       '';
     };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = lib.importTOML ./starship/starship.toml;
   };
 
   programs.kitty = {
