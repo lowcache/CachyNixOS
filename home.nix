@@ -431,7 +431,7 @@
       home.packages = with pkgs; [
         fish git fzf starship eza bat ripgrep
         python3 flatpak gedit feh waypaper
-        hypridle hyprlock fd brave tor
+        hypridle hyprlock fd tor
         micro fuzzel wlogout
       ];  
   }
