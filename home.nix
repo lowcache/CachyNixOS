@@ -14,8 +14,11 @@
     # Migrated configs
     "fastfetch" = { source = ./fastfetch; recursive = true; };
     "htop" = { source = ./htop; recursive = true; };
+    "cava" = { source = ./cava; recursive = true; };
     "fuzzel" = { source = ./fuzzel; recursive = true; };
     "wlogout" = { source = ./wlogout; recursive = true; };
+    "kitty/kitty_mod" = { source = ./kitty_mod; recursive = true; };
+    "kitty/colorschemes" = { source = ./kitty_colorschemes; recursive = true; };
   };
 
   programs.fish = {
@@ -243,10 +246,6 @@
 
   programs.kitty = {
     enable = true;
-    font = {
-      name = "TG Frekuent Mono";
-      size = 11;
-    };
     settings = {
       cursor_shape = "beam";
       cursor_trail = 1;
@@ -261,7 +260,8 @@
       bell_on_tab = "no";
       tab_separator = "";
       tab_bar_margin_width = 0.0;
-      tab_title_template = "{f'{title[:30]}…' if title.rindex(title[-1]) + 1 > 30 else (title.center(6) if (title.rindex(title[-1]) + 1) % 2 == 0 else title.center(5))}";
+      tab_bar_margin_height = 0.0;
+      tab_title_template = "{f'{title[:30]}…' if len(title) > 30 else (title.center(6) if len(title) % 2 == 0 else (title.center(5)))}";
     };
     keybindings = {
       "ctrl+c" = "copy_or_interrupt";
@@ -279,14 +279,22 @@
       "ctrl+kp_0" = "change_font_size all 0";
     };
     extraConfig = ''
+      font_family      family="TG Frekuent Mono Variable"
+      bold_font        auto
+      italic_font      auto
+      bold_italic_font auto
+      font_size 11.0
+
       symbol_map U+E000-U+F8FF,U+F0000-U+FFFFD,U+100000-U+10FFFD Symbols Nerd Font
 
       active_tab_font_style   bold
-      active_tab_foreground   #44484A
-      active_tab_background   #798581
-      inactive_tab_foreground #EBD39D
-      inactive_tab_background #44484A
-      tab_bar_background      #44484A
+      active_tab_foreground   #0f111a
+      active_tab_background   #ffcc00
+      inactive_tab_foreground #8f93a2
+      inactive_tab_background #0f111a
+      tab_bar_background      #0f111a
+      include colorschemes/Modus Vivendi Tinted.conf
+      include colorschemes/Custom.conf
     '';
   };
 
