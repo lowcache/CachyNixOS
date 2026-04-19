@@ -17,7 +17,6 @@
     "cava" = { source = ./cava; recursive = true; };
     "fuzzel" = { source = ./fuzzel; recursive = true; };
     "wlogout" = { source = ./wlogout; recursive = true; };
-    "kitty/kitty_mod" = { source = ./kitty_mod; recursive = true; };
     "kitty/colorschemes" = { source = ./kitty_colorschemes; recursive = true; };
   };
 
