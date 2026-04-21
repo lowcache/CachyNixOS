@@ -21,12 +21,12 @@ opts = get_options()
 
 # --- Configuration ---
 # You can change these to match your theme
-ICON_FG = as_rgb(color_as_int(opts.color15))
-ICON_BG = as_rgb(color_as_int(opts.color8))
-ACTIVE_FG = as_rgb(color_as_int(opts.color15))
-ACTIVE_BG = as_rgb(color_as_int(opts.color2)) # Greenish for active
-INACTIVE_FG = as_rgb(color_as_int(opts.color7))
-INACTIVE_BG = as_rgb(color_as_int(opts.color0)) # Dark for inactive
+ICON_FG = as_rgb(0xEBD39D) # cream
+ICON_BG = as_rgb(0x1A1C1D) # basalt_dim
+ACTIVE_FG = as_rgb(0x212325) # basalt
+ACTIVE_BG = as_rgb(0xFC826A) # coral
+INACTIVE_FG = as_rgb(0x798581) # sage
+INACTIVE_BG = as_rgb(0x111314) # basalt_deep
 
 # Separators - WezTerm "Pill" Style
 LEFT_SEP = ""
@@ -52,7 +52,7 @@ def _draw_icon(screen: Screen, index: int) -> int:
         return 0
     
     fg, bg = screen.cursor.fg, screen.cursor.bg
-    screen.cursor.fg = as_rgb(color_as_int(opts.color4)) # Blue for Arch
+    screen.cursor.fg = as_rgb(0x4E7DA8) # slate_blue
     screen.cursor.bg = 0 # Transparent background
     screen.draw(f" {ICON_ARCH} ")
     screen.cursor.fg, screen.cursor.bg = fg, bg
