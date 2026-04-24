@@ -1,0 +1,35 @@
+
+#!/usr/bin/env bash
+
+# Partition Definitions
+# Modify the trailing integers to match your specific block layout
+DRIVE="/dev/nvme1n1"
+EFI_PART="${DRIVE}p1"     
+NIX_PART="${DRIVE}p2"     
+PERSIST_PART="${DRIVE}p3" 
+
+echo "Purging active mount targets..."
+sudo umount -R /mnt 2>/dev/null
+
+echo "Initializing tmpfs root..."
+sudo mount -t tmpfs none /mnt
+
+echo "Constructing mount anchors..."
+sudo mkdir -p /mnt/{boot,nix,persist}
+
+echo "Binding physical partitions..."
+sudo mount "$EFI_PART" /mnt/boot
+sudo mount "$NIX_PART" /mnt/nix
+sudo mount "$PERSIST_PART" /mnt/persist
+
+echo "Mount sequence complete. Target matrix:"
+lsblk "$DRIVE"
+ 
+edit=$(sudo micro /mnt/persist/home/nondeus/.nix-config/nixos/configuration.nix)
+
+if [[ -f /mnt/persist/home/nondeus/.nix-config/nixos/configuration.nix ]]; then
+  echo "opening editor with nix config"
+  ${edit}
+fi
+
+
